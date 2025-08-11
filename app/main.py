@@ -16,6 +16,8 @@ PASSWORDS_TO_BRUTE_FORCE = [
     "e5f3ff26aa8075ce7513552a9af1882b4fbc2a47a3525000f6eb887ab9622207",
 ]
 
+PASSWORDS_TO_BRUTE_FORCE_SET = set(PASSWORDS_TO_BRUTE_FORCE)
+
 def sha256_hash_str(to_hash: str) -> str:
     return sha256(to_hash.encode("utf-8")).hexdigest()
 
@@ -23,7 +25,7 @@ def sha256_hash_str(to_hash: str) -> str:
 def search_number_passwords(start, end) -> list:
     found = []
     for number in range(start, end):
-        if sha256_hash_str(f"{number:08d}") in PASSWORDS_TO_BRUTE_FORCE:
+        if sha256_hash_str(f"{number:08d}") in PASSWORDS_TO_BRUTE_FORCE_SET:
             found.append(f"{number:08d}")
 
     return found
