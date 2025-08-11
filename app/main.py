@@ -25,7 +25,7 @@ def search_number_passwords(start, end) -> list:
     for number in range(start, end):
         if sha256_hash_str(f"{number:08d}") in PASSWORDS_TO_BRUTE_FORCE:
             found.append(f"{number:08d}")
-            print(f"Found password: {',\n '.join(found)}")
+
     return found
 
 
@@ -42,7 +42,13 @@ def brute_force_password() -> None:
             futures.append(executor.submit(search_number_passwords, start, end))
 
     wait(futures)
+    all_passwords = []
+    for future in futures:
+        all_passwords.extend(future.result())
 
+    print("Found passwords:")
+    for password in all_passwords:
+        print(password)
 
 if __name__ == "__main__":
     start_time = time.perf_counter()
